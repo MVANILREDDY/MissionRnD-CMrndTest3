@@ -50,7 +50,43 @@ struct node{
 	struct node *right;
 };
 
+void inorder_trav(struct node*, int*);
 
 int get_missing_value(struct node *root,int n){
-    return -1;
+	if (root == NULL&&n == 0)
+	{
+		return -1;
+	}
+	else
+	{
+		int i = 0, sum = 0;
+		if (n<0)
+		{
+			n = n*-1;
+			for (i = 0; i <= n; i++)
+			{
+				sum = sum + i;
+			}
+			sum = sum*-1;
+		}
+		else
+		{
+			for (i = 0; i <= n; i++)
+			{
+				sum = sum + i;
+			}
+
+		}
+		inorder_trav(root, &sum);
+		return sum;
+	}
+}
+void inorder_trav(struct node* root, int *sum)
+{
+	if (root != NULL)
+	{
+		inorder_trav(root->left, sum);
+		*sum = *sum - (root->data);
+		inorder_trav(root->right, sum);
+	}
 }

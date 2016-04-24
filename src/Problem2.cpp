@@ -70,7 +70,35 @@ struct node{
 	struct node *left;
 	struct node *right;
 };
-
+void inorder_traveling(struct node*, int*, int*);
 int is_identical(struct node_dll *head, struct node *root){
-	return -1;
+	if (head == NULL || root == NULL)
+		return -1;
+	else
+	{
+		int sum = 0, count = 0;
+		struct node_dll* temp;
+		temp = head;
+		while (temp != NULL)
+		{
+			sum = sum + temp->data;
+			count++;
+			temp = temp->next;
+		}
+		inorder_traveling(root, &sum, &count);
+		if (count == 0 && sum == 0)
+			return 1;
+		else
+			return 0;
+	}
+}
+void inorder_traveling(struct node*root, int *sum, int*count)
+{
+	if (root != NULL)
+	{
+		inorder_traveling(root->left, sum, count);
+		*sum = *sum - (root->data);
+		--*count;
+		inorder_traveling(root->right, sum, count);
+	}
 }
